@@ -10,7 +10,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 import sympy as sp
-from source.ampl_to_tree import ampl_to_tree, rightmost_operator_pos, func_to_tree, tree_to_prefix, expand_tree, contract_tree
+from source.ampl2tree import ampl_to_tree, rightmost_operator_pos, func_to_tree, tree_to_prefix, expand_tree, contract_tree
 
 
 def test_func_to_tree():

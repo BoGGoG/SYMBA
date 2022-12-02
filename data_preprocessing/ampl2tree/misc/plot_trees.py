@@ -15,9 +15,9 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 import sympy as sp
-from source.ampl_to_tree import ampl_to_tree, rightmost_operator_pos, func_to_tree, tree_to_prefix, expand_tree, contract_tree, get_tree, ampl_raw_tree_to_nltk
-from source.ampl_to_tree import has_subscript, subscripts_to_subtree, is_basis_func, basis_function_to_subtree, nltk_tree_expand_subscripts, p_sub_to_tree
-from source.ampl_to_tree import rename_indices, collect_indices, is_index, raw_ampl_to_tree, categorize_indices, get_index_replacements, nltk_tree_replace_leaves
+from source.ampl2tree import ampl_to_tree, rightmost_operator_pos, func_to_tree, tree_to_prefix, expand_tree, contract_tree, get_tree, ampl_raw_tree_to_nltk
+from source.ampl2tree import has_subscript, subscripts_to_subtree, is_basis_func, basis_function_to_subtree, nltk_tree_expand_subscripts, p_sub_to_tree
+from source.ampl2tree import rename_indices, collect_indices, is_index, raw_ampl_to_tree, categorize_indices, get_index_replacements, nltk_tree_replace_leaves
 
 
 ampls_raw_file = "../../data.nosync/QED_amplitudes_TreeLevel_2to3_raw.txt"
