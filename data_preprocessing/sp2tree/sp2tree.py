@@ -113,7 +113,9 @@ def sympy_to_tree(expr):
     if len(expr.args) > 0:
         op = expr.func
         op = operators[op]
-        return Tree(op, list(map(sympy_to_tree, expr.args)))
+        args = [sympy_to_tree(a) for a in expr.args]
+        # return Tree(op, list(map(sympy_to_tree, expr.args)))
+        return Tree(op, args)
     else:
         return expr
 
