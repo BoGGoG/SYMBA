@@ -1,66 +1,54 @@
-Starting calculation at:2022-11-14 15:20:00.210815
+Starting calculation at:2022-11-23 20:07:43.869585
 Worked on folders:3to3/
 batch_size:200
 lines:1040
 num_batches:6
 ----------------------
 ----------------------
-Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes in prefix notation to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3_simplified_shortened_hybridprefix.txt
+Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3_raw.txt
 batch:0
-started at:2022-11-14 15:20:00.211074
-finished at:2022-11-14 15:20:36.083430
+started at:2022-11-23 20:07:43.869745
+finished at:2022-11-23 20:07:43.870688
 batch_start_index:0
 batch_end_index:200
 batch_size:200
 ----------------------
-Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes in prefix notation to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3_simplified_shortened_hybridprefix.txt
+Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3_raw.txt
 batch:1
-started at:2022-11-14 15:20:36.083886
-finished at:2022-11-14 15:21:09.899144
+started at:2022-11-23 20:07:43.870722
+finished at:2022-11-23 20:07:43.871828
 batch_start_index:200
 batch_end_index:400
 batch_size:200
 ----------------------
-Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes in prefix notation to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3_simplified_shortened_hybridprefix.txt
+Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3_raw.txt
 batch:2
-started at:2022-11-14 15:21:09.899651
-finished at:2022-11-14 15:21:42.714118
+started at:2022-11-23 20:07:43.871850
+finished at:2022-11-23 20:07:43.873540
 batch_start_index:400
 batch_end_index:600
 batch_size:200
 ----------------------
-Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes in prefix notation to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3_simplified_shortened_hybridprefix.txt
+Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3_raw.txt
 batch:3
-started at:2022-11-14 15:21:42.714679
-finished at:2022-11-14 15:22:16.982674
+started at:2022-11-23 20:07:43.873564
+finished at:2022-11-23 20:07:43.875277
 batch_start_index:600
 batch_end_index:800
 batch_size:200
 ----------------------
-Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes in prefix notation to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3_simplified_shortened_hybridprefix.txt
+Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3_raw.txt
 batch:4
-started at:2022-11-14 15:22:16.983088
-finished at:2022-11-14 15:22:50.781212
+started at:2022-11-23 20:07:43.875296
+finished at:2022-11-23 20:07:43.880316
 batch_start_index:800
 batch_end_index:1000
 batch_size:200
 ----------------------
-Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3.txt
-Appended simplified sqamplitudes in prefix notation to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_3to3_simplified_shortened_hybridprefix.txt
+Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_3to3_raw.txt
 batch:5
-started at:2022-11-14 15:22:50.781543
-finished at:2022-11-14 15:22:59.433832
+started at:2022-11-23 20:07:43.880336
+finished at:2022-11-23 20:07:43.881404
 batch_start_index:1000
 batch_end_index:1200
 batch_size:200

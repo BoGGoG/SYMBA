@@ -71,8 +71,11 @@ indices_greek = [
         ]
 
 
-def raw_ampl_to_tree(raw_ampl):
-    raw_ampl_split = raw_ampl.split(";")
+def raw_ampl_to_tree(raw_ampl, needs_split=True):
+    if needs_split:
+        raw_ampl_split = raw_ampl.split(";")
+    else:
+        raw_ampl_split = raw_ampl
     tree_raw = get_tree(raw_ampl_split)
     tree = ampl_raw_tree_to_nltk(tree_raw)
     tree = nltk_tree_expand_subscripts(tree)
@@ -321,7 +324,6 @@ def has_subscript(str):
     ret = ("_" in str) and ("{" in str)  # }
     ret = (ret or ("p_" in str))
     return ret
-
 
 
 def subscripts_to_subtree(expr, save_input=False):

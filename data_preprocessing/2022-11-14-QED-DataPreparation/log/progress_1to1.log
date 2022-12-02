@@ -1,16 +1,14 @@
-Starting calculation at:2022-11-14 15:17:20.534873
+Starting calculation at:2022-11-23 20:11:20.040260
 Worked on folders:1to1/
 batch_size:200
 lines:0
 num_batches:1
 ----------------------
 ----------------------
-Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_1to1.txt
-Appended simplified sqamplitudes to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_1to1.txt
-Appended simplified sqamplitudes in prefix notation to ../../data_unique.nosync/QED_sqamplitudes_TreeLevel_1to1_simplified_shortened_hybridprefix.txt
+Appended amplitudes to ../../data_unique.nosync/QED_amplitudes_TreeLevel_1to1_raw.txt
 batch:0
-started at:2022-11-14 15:17:20.535039
-finished at:2022-11-14 15:17:21.568008
+started at:2022-11-23 20:11:20.040426
+finished at:2022-11-23 20:11:20.040471
 batch_start_index:0
 batch_end_index:200
 batch_size:200

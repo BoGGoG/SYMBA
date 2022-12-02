@@ -38,5 +38,9 @@
 **/__pycache__
 */out/*
 **out**
-data.nosync/**
+**data.nosync/**
 raw_data.nosync/**
+**saved_models**
+**.nosync
+*.log
+Learn/**
