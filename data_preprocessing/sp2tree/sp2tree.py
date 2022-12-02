@@ -8,9 +8,9 @@ from icecream import ic
 
 operators = {
     # Elementary functions
-    sp.Add: 'add',
-    sp.Mul: 'mul',
-    sp.Pow: 'pow',
+    sp.Add: 'Sum',
+    sp.Mul: 'Prod',
+    sp.Pow: 'Pow',
     sp.exp: 'exp',
     sp.log: 'ln',
     sp.Abs: 'abs',
@@ -51,19 +51,19 @@ operators_inv = {operators[key]: key for key in operators}
 
 operators_nargs = {
     # Elementary functions
-    'mul(': -1,
-    'add(': -1,
-    'add': 2,
+    'Prod(': -1,
+    'Sum(': -1,
+    'Sum': 2,
     'sub': 2,
-    'mul': 2,
+    'Prod': 2,
     'div': 2,
-    'pow': 2,
+    'Pow': 2,
     'rac': 2,
     'inv': 1,
-    'pow2': 1,
-    'pow3': 1,
-    'pow4': 1,
-    'pow5': 1,
+    'Pow2': 1,
+    'Pow3': 1,
+    'Pow4': 1,
+    'Pow5': 1,
     'sqrt': 1,
     'exp': 1,
     'ln': 1,
