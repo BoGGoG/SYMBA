@@ -66,5 +66,5 @@ def shorten_expression(expr):
     expr_str = str(expr)
     expr_str = fix_i(expr_str)
     expr_str = combine_m(expr_str)
-    expr_str = combine_m_s(expr_str)
+    # expr_str = combine_m_s(expr_str)   # activate this if you want even shorter sequences
     return sp.sympify(expr_str)

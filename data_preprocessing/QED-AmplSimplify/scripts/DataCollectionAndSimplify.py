@@ -7,8 +7,24 @@ Then we simplify the squared amplitudes with SYMPY.
 A timeout is added. This is because somehow if SYMPY has an unlucky random seed for a
 simplify, it will not finish.
 
-The data is exported the following way:
-    - 
+    - `ampl_folders_prefix = "../../data-generation-marty/QED/out/ampl/"`
+        This is the folder prefix for the amplitudes. The actual folder will have e.g. `1to2/` appended to this.
+    - `sqampl_raw_folders_prefix = "../../data-generation-marty/QED/out/sq_ampl_raw/"`
+        This is the folder prefix for the squared amplitudes. The actual folder will have e.g. `1to2/` appended to this.
+    - `process_multiplicities = ["1to2/", "2to1/", "2to2/", "2to3/", "3to2/"]`
+        Folders in the `ampl_folders_prefix` and `sqampl_raw_folders_prefix folders`.
+    - `export_folder = "../../data.nosync/"`
+        Where the amplitudes and squared amplitudes get exported. They will be named like `QED_amplitudes_TreeLevel_1to2.txt` 
+        and `QED_sqamplitudes_TreeLevel_simplified_1to2.txt`
+    - `n_cpus = 10`
+        Number of CPUs to use in parallel
+    - `fresh_start= False`
+        False to continue previous calculation where left off.
+
+The squared amplitudes are:
+    - simplified using `sympy.factor`
+    - shortened where some tokens are combined and e.g. i-->I^2
+    - simplified again so that things like I^2=-1 get fixed.
 """
 
 
@@ -31,7 +47,7 @@ current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 
-from source.helpers import process_ampl_sqampl
+from source.helpers import process_ampl_sqampl, shorten_expression_helper
 
 
 def read_amplitudes_and_raw_squares(folder_ampl, folder_sqampl_raw):
@@ -137,8 +153,8 @@ def _queue_mgr(func_str: str, q_in: mp.Queue, q_out: mp.Queue, timeout: int, pid
         except mpq.Empty:
             q_out.put((positioning, x))
             # print(f'[{pid}]: {positioning}: timed out ({timeout}s)')
-            with open(timeout_logfile, "a") as f:
-                f.write("Timed out after "+str(timeout)+" seconds. Argument:" + x + "\n")
+            # with open(timeout_logfile, "a") as f:
+            #     f.write("Timed out after "+str(timeout)+" seconds. Argument:" + x + "\n")
         finally:
             try:
                 proc.terminate()
@@ -218,7 +234,7 @@ def process_in_batches_(amplitudes, squared_amplitudes, name, batch_start,   # d
 
     number_of_batches = ceil(len(amplitudes) / batch_size)
     outfile_amplitudes = export_folder + "QED_amplitudes_TreeLevel_" + name[:-1] + ".txt"
-    outfile_sqamplitudes_simplified = export_folder + "QED_sqamplitudes_TreeLevel_simplified" + name[:-1] + ".txt"
+    outfile_sqamplitudes_simplified = export_folder + "QED_sqamplitudes_TreeLevel_simplified_" + name[:-1] + ".txt"
     progress_file = log_folder + "progress_" + name[:-1] + ".log"
     f_ampl = open(outfile_amplitudes, "a")
     f_sqampl = open(outfile_sqamplitudes_simplified, "a")
@@ -226,11 +242,19 @@ def process_in_batches_(amplitudes, squared_amplitudes, name, batch_start,   # d
         ampl_batch = amplitudes[i_batch*batch_size:(i_batch+1)*batch_size]
         sqampl_batch = squared_amplitudes[i_batch*batch_size:(i_batch+1)*batch_size]
         # ampl_sqampl_simplified = list(map(process_ampl_sqampl, zip(ampl_batch, sqampl_batch)))
-        ampl_sqampl_simplified = list(killer_pmap(process_ampl_sqampl, zip(ampl_batch, sqampl_batch),
+        # ampl_sqampl = list(killer_pmap(shorten_expression_helper, zip(ampl_batch, sqampl_batch),
+        #                                           cpus=n_cpus, timeout=timeout))
+        ampl_sqampl = list(killer_pmap(process_ampl_sqampl, zip(ampl_batch, sqampl_batch),
+                                                  cpus=n_cpus, timeout=timeout))
+        ampl_sqampl = list(killer_pmap(shorten_expression_helper, ampl_sqampl,
+                                                  cpus=n_cpus, timeout=timeout))
+        ampl_sqampl = list(killer_pmap(process_ampl_sqampl, ampl_sqampl,
+                                                  cpus=n_cpus, timeout=timeout))
+        ampl_sqampl = list(killer_pmap(shorten_expression_helper, ampl_sqampl,
                                                   cpus=n_cpus, timeout=timeout))
 
-        ampl_batch_2 = [a for a, _ in ampl_sqampl_simplified]
-        sqampl_simplified = [sqa for _, sqa in ampl_sqampl_simplified]
+        ampl_batch_2 = [a for a, _ in ampl_sqampl]
+        sqampl_simplified = [sqa for _, sqa in ampl_sqampl]
         out_amplitudes_str = [";".join(x) for x in ampl_batch_2]
         out_sqamplitudes_simplified_str = [str(x) for x in sqampl_simplified]
 
@@ -309,8 +333,9 @@ if __name__=="__main__":
     ampl_folders_prefix = "../../data-generation-marty/QED/out/ampl/"
     sqampl_raw_folders_prefix = "../../data-generation-marty/QED/out/sq_ampl_raw/"
     process_multiplicities = ["1to2/", "2to1/", "2to2/", "2to3/", "3to2/"]
-    # process_multiplicities = ["2to3/", "3to2/"]
+    export_folder = "../../data.nosync/"   # where the amplitudes and squared amplitudes get exported.
     n_cpus = 10
+    fresh_start = False
     for process_mult in process_multiplicities:
-        process_in_batches(ampl_folders_prefix, sqampl_raw_folders_prefix, name=process_mult, fresh_start=False,
-                           export_folder="../../data.nosync/", n_cpus=n_cpus)
+        process_in_batches(ampl_folders_prefix, sqampl_raw_folders_prefix, name=process_mult, fresh_start=fresh_start,
+                           export_folder=export_folder, n_cpus=n_cpus)

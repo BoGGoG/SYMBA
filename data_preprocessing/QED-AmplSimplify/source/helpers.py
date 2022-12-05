@@ -1,4 +1,10 @@
 import sympy as sp
+import sys
+import os
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from source.ExpressionsTokensCombiner import shorten_expression
 
 
 masses_strings = [
@@ -34,3 +40,14 @@ def process_ampl_sqampl(ampl_sqampl):
     sqampl_simplified = sp.factor(sqampl_sp, masses)
     return (ampl, sqampl_simplified)
 
+
+def shorten_expression_helper(ampl_sqampl):
+    ampl = ampl_sqampl[0]
+    sqampl = ampl_sqampl[1]
+    try:
+        sqampl_shortened = shorten_expression(sqampl)
+    except:
+        print("Problem shortening squared amplitudes. I don't know how this code every go reached. GLHF. Printing the sqampl in question:")
+        print(sqampl)
+        return (None, None)
+    return (ampl, sqampl_shortened)
