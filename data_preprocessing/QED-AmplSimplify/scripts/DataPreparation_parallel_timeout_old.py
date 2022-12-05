@@ -33,6 +33,7 @@ simplify_and_prefix = SympyPrefix.simplify_and_prefix
 simplify_sqampl = SympyPrefix.simplify_sqampl
 from source.ExpressionsTokensCombiner import combine_m_s, combine_m, shorten_expression
 
+
 # -------------------------------------------------------------------------------------------  
 
 class TimeoutError(Exception):

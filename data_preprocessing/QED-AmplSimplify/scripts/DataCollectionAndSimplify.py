@@ -135,7 +135,7 @@ def _queue_mgr(func_str: str, q_in: mp.Queue, q_out: mp.Queue, timeout: int, pid
             # print(f'[{pid}]: {positioning}: got')
             q_out.put((positioning, res))
         except mpq.Empty:
-            q_out.put((positioning, sp.sympify(x)))
+            q_out.put((positioning, x))
             # print(f'[{pid}]: {positioning}: timed out ({timeout}s)')
             with open(timeout_logfile, "a") as f:
                 f.write("Timed out after "+str(timeout)+" seconds. Argument:" + x + "\n")
@@ -222,7 +222,6 @@ def process_in_batches_(amplitudes, squared_amplitudes, name, batch_start,   # d
     progress_file = log_folder + "progress_" + name[:-1] + ".log"
     f_ampl = open(outfile_amplitudes, "a")
     f_sqampl = open(outfile_sqamplitudes_simplified, "a")
-    f_prog = open(progress_file, "a")
     for i_batch in tqdm(range(batch_start, number_of_batches)):
         ampl_batch = amplitudes[i_batch*batch_size:(i_batch+1)*batch_size]
         sqampl_batch = squared_amplitudes[i_batch*batch_size:(i_batch+1)*batch_size]
@@ -235,15 +234,13 @@ def process_in_batches_(amplitudes, squared_amplitudes, name, batch_start,   # d
         out_amplitudes_str = [";".join(x) for x in ampl_batch_2]
         out_sqamplitudes_simplified_str = [str(x) for x in sqampl_simplified]
 
-        f_prog.write("batch: "+str(i_batch)+"\n")
-        f_ampl.write("\n".join(out_amplitudes_str))
-        f_ampl.write("\n")
-        f_sqampl.write("\n".join(out_sqamplitudes_simplified_str))
-        f_sqampl.write("\n")
+        with open(progress_file, "a") as f_prog:
+            f_prog.write("batch: "+str(i_batch)+"\n")
+        f_ampl.write("\n".join(out_amplitudes_str)+"\n")
+        f_sqampl.write("\n".join(out_sqamplitudes_simplified_str)+"\n")
 
     f_ampl.close()
     f_sqampl.close()
-    f_prog.close()
 
 
 def process_in_batches(amplitudes_folder_prefix, squared_amplitudes_folder_prefix, name, 
@@ -261,6 +258,7 @@ def process_in_batches(amplitudes_folder_prefix, squared_amplitudes_folder_prefi
     amplitudes_folder = amplitudes_folder_prefix + process_mult
     sqamplitudes_folder = squared_amplitudes_folder_prefix + process_mult
     data_already_loaded = False
+    ic(fresh_start)
     if fresh_start:
         batch_start = 0
         delete_out_files(outfile_amplitudes, outfile_sqamplitudes_simplified, progress_file)
@@ -310,8 +308,8 @@ def process_in_batches(amplitudes_folder_prefix, squared_amplitudes_folder_prefi
 if __name__=="__main__":
     ampl_folders_prefix = "../../data-generation-marty/QED/out/ampl/"
     sqampl_raw_folders_prefix = "../../data-generation-marty/QED/out/sq_ampl_raw/"
-    # process_multiplicities = ["1to2/", "2to1/", "2to2/"]
-    process_multiplicities = ["2to3/", "3to2/"]
+    process_multiplicities = ["1to2/", "2to1/", "2to2/", "2to3/", "3to2/"]
+    # process_multiplicities = ["2to3/", "3to2/"]
     n_cpus = 10
     for process_mult in process_multiplicities:
         process_in_batches(ampl_folders_prefix, sqampl_raw_folders_prefix, name=process_mult, fresh_start=False,

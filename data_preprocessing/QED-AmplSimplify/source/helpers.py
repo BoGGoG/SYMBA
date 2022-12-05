@@ -24,6 +24,13 @@ def process_ampl_sqampl(ampl_sqampl):
 
     ampl = ampl_sqampl[0]
     sqampl = ampl_sqampl[1]
-    sqampl_simplified = sp.factor(sqampl, masses)
+    try:
+        sqampl_sp = sp.sympify(sqampl)
+    except:
+        print("Squared amplitude not a valid sympy expression, I am just returning (None, None) in this case.")
+        print("The squared amplitudes was:")
+        print(sqampl)
+        return (None, None)
+    sqampl_simplified = sp.factor(sqampl_sp, masses)
     return (ampl, sqampl_simplified)
 
