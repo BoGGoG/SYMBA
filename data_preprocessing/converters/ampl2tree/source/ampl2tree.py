@@ -71,6 +71,18 @@ indices_greek = [
         ]
 
 
+def raw_ampl_to_tree_nosplit(raw_ampl):
+    """
+    This seems to be rather odd, but it's needed if I want to use raw_ampl_to_tree
+    with the option `needs_split=False` in a parallel map.
+    Unfortunately `from multiprocessing import Pool`'s `Pool.pmap` needs a function that is defined
+    outside the main file and it also cannot be a lambda function.
+    I don't know how else to do this than define this function or change the default value for `needs_split`,
+    which I don't want to do.
+    """
+    return raw_ampl_to_tree(raw_ampl, needs_split=False)
+
+
 def raw_ampl_to_tree(raw_ampl, needs_split=True):
     if needs_split:
         raw_ampl_split = raw_ampl.split(";")
