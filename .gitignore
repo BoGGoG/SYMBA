@@ -37,7 +37,8 @@
 **make**
 **/__pycache__
 */out/*
-**out**
+**/out/**
+**/out_unique/**
 **data.nosync/**
 raw_data.nosync/**
 **saved_models**
