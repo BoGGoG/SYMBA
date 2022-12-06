@@ -13,9 +13,11 @@ sys.path.append(parent_parent)
 from converters.tree2other.tree2other import tree_to_prefix
 
 
-n_cpu = 4
+n_cpu = 2
 ampl_trees_file = "../../data.nosync/tree/QED_amplitudes_trees.pickle"
 sqampl_trees_file = "../../data.nosync/tree/QED_sqamplitudes_trees.pickle"
+ampl_prefix_export_file = "../../data.nosync/prefix/QED_amplitudes_prefix.pickle"
+sqampl_prefix_export_file = "../../data.nosync/prefix/QED_sqamplitudes_prefix.pickle"
 
 with open(ampl_trees_file, "br") as f:
     ampl_trees = pickle.load(f)
@@ -53,3 +55,11 @@ for sqampls in sqampl_trees:
 assert len(ampl_prefix) == len(sqampl_prefix)
 for a, sqa in zip(ampl_prefix, sqampl_prefix):
     assert len(a) == len(sqa)
+
+with open(ampl_prefix_export_file, "bw") as f:
+    pickle.dump(ampl_prefix, f)
+    print("Saved amplitudes prefix to", ampl_prefix_export_file)
+
+with open(sqampl_prefix_export_file, "bw") as f:
+    pickle.dump(sqampl_prefix, f)
+    print("Saved squared amplitudes prefix to", sqampl_prefix_export_file)
