@@ -1,7 +1,8 @@
 """
-Convert the amplitudes and squared amplitudes from `data.nosync` to different formats.
-- `nltk.Tree`: This is the base form
-This happens parallelized
+Convert the amplitudes and squared amplitudes from `data.nosync` to trees.
+The data is saved using pickle.
+From the tree format it is easy to convert to all other formats, thus this should
+be run first. Other scripts can then read in the trees and convert to other formats.
 """
 
 from icecream import ic
@@ -20,7 +21,7 @@ sys.path.append(parent_parent)
 ic(os.listdir(parent_parent))
 
 import sympy as sp
-from converters.ampl2tree.source.ampl2tree import ampl_to_tree, raw_ampl_to_tree, raw_ampl_to_tree_nosplit
+from converters.ampl2tree.source.ampl2tree import ampl_to_tree, raw_ampl_to_tree, raw_ampl_to_tree_nosplit, rename_indices
 from converters.sp2tree.sp2tree import sympy_to_tree
 
 
@@ -126,6 +127,7 @@ for process in processes:
     sqamplitudes.append(sqamplitudes_process)
     with Pool(n_cpu) as p:
         ampl_trees_process = p.map(raw_ampl_to_tree_nosplit, amplitudes_process)
+        ampl_trees_process = p.map(rename_indices, ampl_trees_process)
     ampl_trees.append(ampl_trees_process)
 
     with Pool(n_cpu) as p:
