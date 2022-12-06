@@ -140,7 +140,7 @@ def tree_to_prefix(tree_input, hybrid=False):
         if isinstance(tree[i], Tree):
             arr = arr + tree_to_prefix(tree[i], hybrid=hybrid)
         else:
-            arr.append(tree[i])
+            arr.append(str(tree[i]))
 
     if node[-1] == "(":  # )
         arr.append(")")
