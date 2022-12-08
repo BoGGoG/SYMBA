@@ -100,6 +100,7 @@ def load_squared_amplitudes(filename, max_lines=-1, n_cpu=4):
             if ctr >= number_of_lines:
                 break
     pbar.close()
+    print("Sympifying squared amplitudes")
     with Pool(n_cpu) as p:
         data = p.map(sp.sympify, data)
     return data
@@ -107,37 +108,35 @@ def load_squared_amplitudes(filename, max_lines=-1, n_cpu=4):
 data_folder = "../../data.nosync/"
 amplitudes_filename_start = "QED_amplitudes_TreeLevel_"
 sqamplitudes_filename_start = "QED_sqamplitudes_TreeLevel_simplified_"
-# processes = ["1to2", "2to1", "2to2", "2to3", "3to2"]
-processes = ["1to2", "2to1", "2to2"]
-max_lines = -1
+processes = ["1to2", "2to1", "2to2", "2to3", "3to2"]
+amplitudes_export_file = "../../data.nosync/tree/QED_amplitudes_trees.pickle"
+sqamplitudes_export_file = "../../data.nosync/tree/QED_sqamplitudes_trees.pickle"
 
-amplitudes = []
-sqamplitudes = []
-ampl_trees = []
-sqampl_trees = []
-n_cpu = 4
+n_cpu = 10
 
+f_amplitudes = open(amplitudes_export_file, "a+b")
+f_sqamplitudes = open(sqamplitudes_export_file, "a+b")
 
 for process in processes:
     ampl_f = data_folder + amplitudes_filename_start + process + ".txt"
     sqampl_f = data_folder + sqamplitudes_filename_start + process + ".txt"
-    amplitudes_process = load_raw_amplitudes(ampl_f, max_lines=max_lines)
-    sqamplitudes_process = load_squared_amplitudes(sqampl_f, max_lines=max_lines, n_cpu=n_cpu)
-    amplitudes.append(amplitudes_process)
-    sqamplitudes.append(sqamplitudes_process)
+    amplitudes_process = load_raw_amplitudes(ampl_f)
+    sqamplitudes_process = load_squared_amplitudes(sqampl_f, n_cpu=n_cpu)
+    print("Starting multiprocessing")
     with Pool(n_cpu) as p:
+        print("converting amplitudes to trees")
         ampl_trees_process = p.map(raw_ampl_to_tree_nosplit, amplitudes_process)
+        print("renaming indices")
         ampl_trees_process = p.map(rename_indices, ampl_trees_process)
-    ampl_trees.append(ampl_trees_process)
 
+    print("Starting multiprocessing")
     with Pool(n_cpu) as p:
+        print("converting squared amplitudes to trees")
         sqampl_trees_process = p.map(sympy_to_tree, sqamplitudes_process)
-    sqampl_trees.append(sqampl_trees_process)
     
 
+    pickle.dump(ampl_trees_process, f_amplitudes)
+    pickle.dump(sqampl_trees_process, f_sqamplitudes)
 
-with open("../../data.nosync/tree/QED_amplitudes_trees.pickle", "bw") as f:
-    pickle.dump(ampl_trees, f)
-
-with open("../../data.nosync/tree/QED_sqamplitudes_trees.pickle", "bw") as f:
-    pickle.dump(sqampl_trees, f)
+f_amplitudes.close()
+f_sqamplitudes.close()

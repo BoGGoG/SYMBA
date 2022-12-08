@@ -334,7 +334,7 @@ if __name__=="__main__":
     sqampl_raw_folders_prefix = "../../data-generation-marty/QED/out/sq_ampl_raw/"
     process_multiplicities = ["1to2/", "2to1/", "2to2/", "2to3/", "3to2/"]
     export_folder = "../../data.nosync/"   # where the amplitudes and squared amplitudes get exported.
-    n_cpus = 10
+    n_cpus = 12
     fresh_start = False
     for process_mult in process_multiplicities:
         process_in_batches(ampl_folders_prefix, sqampl_raw_folders_prefix, name=process_mult, fresh_start=fresh_start,
