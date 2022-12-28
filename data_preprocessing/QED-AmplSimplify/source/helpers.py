@@ -9,6 +9,8 @@ from source.ExpressionsTokensCombiner import shorten_expression
 
 masses_strings = [
         "m_e",
+        "m_mu",
+        "m_tau",
         "m_u",
         "m_d",
         "m_s",
